@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Main from "./components/Main";
+import "./App.css";
+import DisplayProduct from "./components/DisplayProduct";
+import { useState } from "react";
 
 function App() {
+  const [productCount, setProductCount] = useState(0);
+  let showDisplayProduct = true;
+  const showProduct = () => {
+    const DisplayProduct = document.getElementById("DisplayProduct");
+    if (showDisplayProduct) {
+      DisplayProduct.classList.add("showDisplayImage");
+      showDisplayProduct = !showDisplayProduct;
+    } else {
+      DisplayProduct.classList.remove("showDisplayImage");
+      showDisplayProduct = !showDisplayProduct;
+    }
+  };
+  const add = () => setProductCount((old) => ++old);
+  const sub = () => setProductCount((old) => --old);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header productCount={productCount} />
+      <Main
+        productCount={productCount}
+        add={add}
+        sub={sub}
+        showProduct={showProduct}
+      />
+      <DisplayProduct showProduct={showProduct} />
     </div>
   );
 }
 
 export default App;
+
+
